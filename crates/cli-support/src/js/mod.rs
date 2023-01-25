@@ -3029,7 +3029,9 @@ impl<'a> Context<'a> {
             AuxImport::StructuralGetter(field) => {
                 assert!(kind == AdapterJsImportKind::Normal);
                 assert!(!variadic);
-                assert_eq!(args.len(), 1);
+                if args.len() != 1 {
+                    bail!("structural field getters must have exactly 1 argument")
+                }
                 Ok(format!("{}.{}", args[0], field))
             }
 
